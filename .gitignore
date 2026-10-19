@@ -1,5 +1,1 @@
-# Donnees brutes et intermediaires potentiellement volumineuses
-data/raw/**
-!data/raw/.gitkeep
-data/processed/**
-!data/processed/.gitkeep
+# Les donnees BAAC brutes et traitees sont versionnees dans le depot.
