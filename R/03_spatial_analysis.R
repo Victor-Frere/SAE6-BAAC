@@ -19,4 +19,4 @@ library(tmap)
 # Calculer les indicateurs LISA et cartographier les regroupements locaux.
 
 # --- 6. Export ---
-# Enregistrer les cartes et resultats dans outputs/figures et outputs/tables.
+# Enregistrer les cartes et resultats dans outputs/03_spatial_analysis/.

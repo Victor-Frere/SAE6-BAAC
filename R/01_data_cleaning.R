@@ -1607,7 +1607,7 @@ if (exists("df_bilan", inherits = FALSE) &&
         dpi = 300
       )
       cli::cli_alert_success(
-        "Tableau bilan sauvegardé dans outputs/figures/01_data_cleaning/tableau_bilan_imputation.png."
+        "Tableau bilan sauvegardé dans outputs/01_data_cleaning/figures/tableau_bilan_imputation.png."
       )
     },
     error = function(error) {

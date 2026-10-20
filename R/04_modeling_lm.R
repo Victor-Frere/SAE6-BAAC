@@ -18,4 +18,4 @@ library(lmtest)
 # Verifier les hypotheses du modele a l'aide des diagnostics et tests appropries.
 
 # --- 6. Export ---
-# Enregistrer le modele et les diagnostics dans outputs/tables et outputs/figures.
+# Enregistrer le modele et les diagnostics dans outputs/04_modeling_lm/.

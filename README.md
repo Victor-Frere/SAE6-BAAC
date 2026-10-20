@@ -123,5 +123,7 @@ base_analytique <- readr::read_csv2(
 )
 ```
 
-Les etapes d'analyse exploratoire, spatiale, de tests statistiques et de
-modelisation sont suivies dans [TODO.md](TODO.md).
+Les etapes d'analyse exploratoire (descriptive et inferentielle), spatiale et
+de modelisation sont suivies dans [TODO.md](TODO.md). Les tests d'hypotheses
+inferentiels sont integres a la Phase 2 et ne font plus l'objet d'un script
+autonome.

@@ -7,9 +7,9 @@ au fur et à mesure de l'avancement.
 
 ### 0.1 Arborescence du projet
 
-- [x] Créer les dossiers `data/raw/`, `data/processed/`, `R/`,
-      `outputs/figures/`, `outputs/tables/` et `report/`
-- [x] Initialiser `main.R` et les scripts `R/01_...` à `R/06_...`
+- [x] Créer les dossiers `data/raw/`, `data/processed/`, `R/`, `outputs/`
+      structurés par script et `report/`
+- [x] Initialiser `main.R` et les scripts `R/01_...` à `R/05_...`
 - [x] Configurer `.gitignore` pour exclure les fichiers dans `data/raw/` et
       `data/processed/`
 
@@ -42,7 +42,7 @@ Script : `R/01_data_cleaning.R`
       (relation 1-à-N)
 - [x] Détecter et quantifier les doublons sur les clés primaires
 - [x] Générer l'histogramme d'audit des doublons :
-      `outputs/figures/hist_doublons.png`
+      `outputs/01_data_cleaning/figures/hist_doublons.png`
 - [x] Traiter et supprimer les doublons selon une règle documentée
 - [x] Sélectionner automatiquement une clé véhicule de remplacement
       (`id_vehicule` ou `num_veh`) lorsque nécessaire
@@ -77,7 +77,8 @@ Script : `R/01_data_cleaning.R`
       `-179 <= long <= 173`
 - [x] Remplacer par `NA` les années, vitesses et coordonnées hors bornes
 - [x] Générer des boxplots de contrôle des valeurs aberrantes
-- [x] Créer les dossiers de sortie `outputs/figures/` et `data/processed/`
+- [x] Créer les dossiers de sortie `outputs/01_data_cleaning/figures/`,
+      `outputs/01_data_cleaning/tables/` et `data/processed/`
       s'ils n'existent pas
 - [x] Exporter le jeu intermédiaire vers
       `data/processed/dataset_pre_traitement.csv` avec `readr::write_csv2()`
@@ -141,66 +142,143 @@ Les scripts d'analyse suivants devront importer la base finale avec
 
 Script : `R/02_eda_univariate.R`
 
-### 2.1 Axe 1 : Infrastructures & Typologie des Voies
+### 2.1 Règles communes de l'analyse univariée (Partie 1)
 
-- [x] Calculer les statistiques descriptives de `vma` (moyenne, médiane, IQR, skewness) selon les types de routes
-- [x] Croiser la gravité (`grav`) avec la catégorie de route (`catr`) et le type d'infrastructure (`infra`, `plan`, `prof`)
-- [x] Produire les histogrammes, boxplots croisés et barplots de l'Axe 1 dans `outputs/02_eda_univariate/figures/axe1_infra/`
+- [ ] Identifier le type de chaque variable (quantitative discrète/continue ou qualitative nominale/ordinale) et contrôler les valeurs aberrantes, les effectifs et l'absence de `NA`.
+- [ ] Pour chaque variable quantitative, décrire la forme de la distribution avec un histogramme, une densité, un boxplot, l'asymétrie (`skewness`) et l'aplatissement (`kurtosis`).
+- [ ] Choisir les paramètres de position et de dispersion selon la symétrie :
+  - [ ] Distribution approximativement symétrique : moyenne, écart-type et variance.
+  - [ ] Distribution asymétrique ou présence d'extrêmes : médiane, quartiles et écart interquartile (`IQR`).
+- [ ] Calculer systématiquement l'étendue (`max - min`), le mode (`collapse::fmode()` ou modalité issue de `table()`), les quantiles (au minimum `Q1`, médiane et `Q3`) et les indicateurs retenus ci-dessus.
+- [ ] Pour chaque variable qualitative, calculer les effectifs, fréquences relatives et modalités dominantes ; représenter les résultats par barplot.
 
-### 2.2 Axe 2 : Vulnérabilité des Usagers & Équipements de Sécurité
+### 2.2 Axe 1 : Infrastructures & Typologie des Voies
 
-- [x] Analyser la distribution de l'âge (`age`) et des tranches d'âge (`tranche_age`) par niveau de sévérité (`grav`)
-- [x] Mesurer l'effet bivarié de la présence d'équipements de sécurité (`presence_secu`) sur la sévérité des blessures
-- [x] Générer les tables de contingence, profils lignes/colonnes et graphiques associés dans `outputs/02_eda_univariate/figures/axe2_usagers/`
+- [x] Calculer les statistiques descriptives de `vma` (moyenne, médiane, IQR, skewness) selon les types de routes.
+- [x] Croiser la gravité (`grav`) avec la catégorie de route (`catr`) et le type d'infrastructure (`infra`, `plan`, `prof`).
+- [x] Produire les histogrammes, boxplots croisés et barplots de l'Axe 1 dans `outputs/02_eda_univariate/figures/axe1_infra/`.
+- [ ] Appliquer le choix symétrique/asymétrique des indicateurs à `vma` selon `catr` : moyennes/écarts-types/variances si la distribution est symétrique, médianes/quartiles/`IQR` sinon.
 
-### 2.3 Axe 3 : Temporalité, Calendrier & Facteurs Exogènes
+### 2.3 Axe 2 : Vulnérabilité des Usagers & Équipements de Sécurité
 
-- [x] Évaluer la survenance et la gravité selon le calendrier (`jours_feries`, `vacances_scolaires`, `jour_semaine`)
-- [x] Analyser la distribution horaire (`heure_exacte`) des accidents et la sévérité par tranche horaire
-- [x] Exporter les représentations graphiques temporelles dans `outputs/02_eda_univariate/figures/axe3_temp/`
+- [x] Analyser la distribution de l'âge (`age`) et des tranches d'âge (`tranche_age`) par niveau de sévérité (`grav`).
+- [x] Mesurer l'effet bivarié de la présence d'équipements de sécurité (`presence_secu`) sur la sévérité des blessures.
+- [x] Générer les tables de contingence, profils lignes/colonnes et graphiques associés dans `outputs/02_eda_univariate/figures/axe2_usagers/`.
+- [ ] Comparer `age` et `grav` avec les statistiques conditionnelles adaptées : moyennes/écarts-types en cas symétrique, médianes/`IQR` en cas asymétrique.
 
-## Phase 3 — Analyse spatiale (Focus Axe 1)
+### 2.4 Axe 3 : Temporalité, Calendrier & Facteurs Exogènes
+
+- [x] Évaluer la survenance et la gravité selon le calendrier (`jours_feries`, `vacances_scolaires`, `jour_semaine`).
+- [x] Analyser la distribution horaire (`heure_exacte`) des accidents et la sévérité par tranche horaire.
+- [x] Exporter les représentations graphiques temporelles dans `outputs/02_eda_univariate/figures/axe3_temp/`.
+
+### 2.5 Bivarié qualitatif × qualitatif : effectifs, profils et indépendance
+
+- [ ] Pour chaque croisement (`grav` × `catr`, `infra`, `plan`, `prof`, `presence_secu`,
+      `jours_feries`, `vacances_scolaires` et `jour_semaine`), construire la table des
+      effectifs joints `n_ij`.
+- [ ] Calculer les fréquences jointes `f_ij = n_ij / n`, les fréquences marginales
+      `f_i.` et `f_.j`, puis les fréquences conditionnelles par lignes
+      `f_{j|i}` et par colonnes `f_{i|j}` ; exporter ces tables dans le dossier
+      `tables` de l'axe concerné.
+- [ ] Représenter chaque liaison par barplots empilés (`position = "fill"`), barplots
+      groupés et graphique en mosaïque avec `ggmosaic::geom_mosaic()`, en affichant
+      les proportions plutôt que les effectifs bruts lorsque la gravité est comparée.
+- [ ] Formuler le test du Chi-2 d'indépendance (`H_0` : les deux variables sont
+      indépendantes ; `H_1` : elles sont associées) et conserver la statistique,
+      les degrés de liberté, la p-value et la décision au seuil `alpha = 5 %`.
+- [ ] Contrôler la condition de validité avec `test$expected` : vérifier les
+      effectifs théoriques `>= 5` (et documenter toute cellule insuffisante).
+- [ ] Si la condition du Chi-2 n'est pas respectée, basculer explicitement vers
+      `fisher.test()` (notamment pour les tables 2 × 2 ou de faible effectif) et
+      rapporter la p-value et la décision correspondantes.
+
+### 2.6 Bivarié quantitatif × qualitatif : comparaison de groupes
+
+- [ ] Pour `vma` × `catr` et `age` × `grav`, produire les statistiques
+      conditionnelles adaptées : moyenne/écart-type (cas symétrique) ou
+      médiane/`IQR` (cas asymétrique), avec effectif de chaque groupe.
+- [ ] Suivre l'arbre décisionnel d'inférence de C. Frévent :
+  - [ ] Étape 1 — Normalité : examiner les Q-Q plots (`qqnorm`, `qqline`) et appliquer
+        Shapiro-Wilk (`shapiro.test`) si `n <= 50`, ou Kolmogorov-Smirnov
+        (`ks.test`) si `n > 50`.
+  - [ ] Étape 2 — Homoscédasticité : pour deux groupes, appliquer le test de Fisher
+        (`var.test`) ; pour plus de deux groupes, appliquer le test de Bartlett
+        (`bartlett.test`), en tenant compte de l'hypothèse de normalité.
+  - [ ] Étape 3 — Test d'hypothèses : utiliser Student
+        (`t.test(..., var.equal = TRUE)`) si les variances sont homogènes, Welch
+        (`t.test(..., var.equal = FALSE)` ou `oneway.test`) sinon ; utiliser
+        Wilcoxon (`wilcox.test`) si la normalité n'est pas acceptable ; pour plus
+        de deux groupes, choisir ANOVA (`aov`) ou Kruskal-Wallis (`kruskal.test`).
+- [ ] Formuler `H_0` (égalité des moyennes ou des distributions selon le test) et
+      `H_1` (différence), conserver statistique, degrés de liberté, p-value,
+      décision à `alpha = 5 %` et, si pertinent, une mesure d'effet.
+
+### 2.7 Bivarié quantitatif × quantitatif : association et corrélation
+
+- [ ] Étudier `age` × `vma`, `age` × `heure_exacte` et les autres couples
+      quantitatifs par nuages de points (`scatterplots`), avec droite de tendance
+      ou courbe LOESS lorsque cela est pertinent.
+- [ ] Calculer la corrélation de Pearson `R` pour mesurer un lien linéaire (données
+      quantitatives compatibles avec les hypothèses paramétriques) et la corrélation
+      de Spearman `R_S` pour mesurer un lien monotone, plus robuste aux valeurs
+      extrêmes et à la non-normalité.
+- [ ] Tester la nullité de chaque coefficient avec
+      `cor.test(..., method = "pearson")` ou
+      `cor.test(..., method = "spearman")`.
+- [ ] Formuler `H_0 : rho = 0` (absence de corrélation dans la population) contre
+      `H_1 : rho != 0`, rapporter le coefficient, l'intervalle de confiance si
+      disponible, la p-value et la décision au seuil `alpha = 5 %`.
+
+## Phase 3 — Analyse spatiale et dépendance spatiale (Focus Axe 1)
 
 Script : `R/03_spatial_analysis.R`
 
-### 3.1 Spatialisation & Conversion cartographique
+### 3.1 Conversion cartographique & Sémiologie (Partie 5)
 
-- [ ] Filtrer les coordonnées valides et convertir le dataframe en objet `sf` (WGS84 EPSG:4326 -> Lambert-93 EPSG:2154)
-- [ ] Exporter la couche géographique sous `data/processed/accidents_spatial.gpkg`
-- [ ] Cartographier la gravité (`grav`) et la densité des accidents selon la catégorie de route (`catr`)
+- [ ] **Préparation & Exportation des données spatiales**
+  - [ ] Filtrer les coordonnées valides (`lat`, `long`) et convertir le dataframe en objet `sf`
+  - [ ] Reprojeter en Lambert-93 (`EPSG:2154`) pour la métropole
+  - [ ] Agréger par entité géographique (Communes / Départements)
+  - [ ] Exporter la couche spatiale sous `data/processed/accidents_spatial.gpkg`
+- [ ] **Représentation des Volumes (Sémiologie - Effectifs)**
+  - [ ] Cartographier le volume d'accidents par cercles proportionnels (`stat_sf_coordinates(aes(size = ...))`)
+  - [ ] Ajuster la taille des cercles pour garantir la lisibilité (`scale_size_continuous(limits = ...)`)
+- [ ] **Représentation des Taux & Densités (Sémiologie - Choroplèthe)**
+  - [ ] Cartographier le taux de sévérité / gravité par aplats de couleurs (`geom_sf(aes(fill = ...))`)
+  - [ ] Appliquer une palette adaptée (`scale_fill_viridis_c(option = "magma", direction = -1)`)
+- [ ] **Discrétisation de la variable quantitative**
+  - [ ] Déterminer le nombre de classes (règle de Sturges `1 + log2(N)` ou classes métier)
+  - [ ] Appliquer la méthode de discrétisation optimale (Quantiles, Jenks ou K-means)
+- [ ] **Habillage cartographique réglementaire (`ggspatial`)**
+  - [ ] Ajouter la flèche d'orientation (Nord) et l'échelle graphique
+  - [ ] Ajouter les repères des grandes villes pour faciliter la localisation
 
-### 3.2 Tests de dépendance spatiale
+### 3.2 Construction des voisinages et matrices de pondération `W` (Partie 6)
 
-- [ ] Construire la matrice de pondération spatiale `W` (normée en ligne)
-- [ ] Calculer l'indice de Moran global sur la sévérité des accidents
-- [ ] Exécuter le test LISA (Local Indicators of Spatial Association)
-- [ ] Cartographier les clusters de sévérité spatiale (Hotspots High-High, Low-Low)
+- [ ] **Définition de la structure de voisinage**
+  - [ ] Voisinage par contiguïté : construire le graphe contigu Queen / Rook (`spdep::poly2nb(..., queen = TRUE)`)
+  - [ ] Voisinage par `k`-plus proches voisins : générer les voisins `k`-NN (`spdep::knearneigh(..., k = 8)` + `knn2nb()`)
+  - [ ] Voisinage par distance : fixer un seuil kilométrique (`spdep::dnearneigh(..., d1 = 0, d2 = threshold)`)
+- [ ] **Matrice de poids spatiaux `W`**
+  - [ ] Standardiser la matrice de voisinage par ligne (`style = "W"`, chaque ligne somme à 1) via `spdep::nb2mat()` et `spdep::nb2listw()`
 
-## Phase 4 — Inférence statistique et tests d'hypothèses (structurée par Axe)
+### 3.3 Tests de dépendance spatiale (Partie 6)
 
-Script : `R/04_stat_testing.R`
+- [ ] **Formulation des hypothèses statistiques**
+  - [ ] Poser `H_0` (absence d'autocorrélation spatiale) vs `H_1` (présence d'autocorrélation spatiale)
+- [ ] **Test de l'indice `I` de Moran**
+  - [ ] Calculer l'indice `I` de Moran global via `spdep::moran.test(x, listw = ..., alternative = "two.sided")`
+  - [ ] Interpréter le signe de `I` (`I > 0` : autocorrélation positive/clusters ; `I < 0` : répulsion)
+- [ ] **Test du `C` de Geary**
+  - [ ] Calculer l'indice `C` de Geary via `spdep::geary.test(x, listw = ..., alternative = "two.sided")`
+  - [ ] Interpréter la valeur de `C` (`C < 1` : autocorrélation positive/clusters ; `C > 1` : répulsion)
+- [ ] **Décision statistique**
+  - [ ] Comparer les p-valeurs obtenues au seuil `alpha = 5 %` et conclure sur la présence de dépendance spatiale
 
-Pour chaque test, formuler explicitement `H_0` et `H_1`, préciser le nom du
-test, sa statistique, sa p-valeur et la décision au seuil `alpha = 5 %`.
+## Phase 4 — Modélisation de la Sévérité & Économétrie
 
-### 4.1 Tests Axe 1 (Infrastructures)
-
-- [ ] Test du Chi-2 / Fisher : Indépendance entre catégorie de route (`catr`) / infrastructure (`infra`) et la gravité (`grav`)
-- [ ] ANOVA / Kruskal-Wallis : Comparaison de la VMA (`vma`) selon les niveaux de gravité
-
-### 4.2 Tests Axe 2 (Usagers & Sécurité)
-
-- [ ] Test du Chi-2 et V de Cramér : Test de liaison entre `presence_secu` et la gravité (`grav`)
-- [ ] Test t de Student / Kruskal-Wallis : Effet de l'âge (`age` / `tranche_age`) sur la sévérité
-
-### 4.3 Tests Axe 3 (Temporalité)
-
-- [ ] Test du Chi-2 : Impact des `jours_feries` et `vacances_scolaires` sur la proportion d'accidents graves (`grave_bin`)
-- [ ] Test d'indépendance sur les tranches horaires et jours de la semaine vs gravité
-
-## Phase 5 — Modélisation de la Sévérité & Économétrie
-
-Script : `R/05_modeling_lm.R`
+Script : `R/04_modeling_lm.R`
 
 ### 5.1 Formulation mathématique & Partitionnement
 
@@ -219,9 +297,9 @@ Script : `R/05_modeling_lm.R`
 - [ ] Analyser l'autocorrélation spatiale des résidus du modèle (Test de Moran)
 - [ ] Si nécessaire, appliquer un modèle avec erreurs-types robustes ou un modèle Spatial Lag / Spatial Error (`spatialreg`)
 
-## Phase 6 — Évaluation et comparaison des modèles
+## Phase 5 — Évaluation et comparaison des modèles
 
-Script : `R/06_model_eval.R`
+Script : `R/05_model_eval.R`
 
 ### 6.1 Évaluation sur le jeu de test
 

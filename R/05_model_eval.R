@@ -13,4 +13,4 @@ library(tidyverse)
 # Comparer les modeles selon des metriques adaptees a la variable cible.
 
 # --- 5. Export ---
-# Enregistrer les metriques et comparaisons dans outputs/tables.
+# Enregistrer les metriques et comparaisons dans outputs/05_model_eval/.
