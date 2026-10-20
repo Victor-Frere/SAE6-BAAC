@@ -1,0 +1,21 @@
+grav;Var1;Var2;Freq
+1;Blessé hospitalisé;Aucun;15817
+2;Blessé léger;Aucun;40681
+3;Indemne;Aucun;41073
+4;Tué;Aucun;2889
+5;Blessé hospitalisé;Autres;1062
+6;Blessé léger;Autres;2977
+7;Indemne;Autres;2909
+8;Tué;Autres;158
+9;Blessé hospitalisé;Carrefour aménagé;922
+10;Blessé léger;Carrefour aménagé;2623
+11;Indemne;Carrefour aménagé;2826
+12;Tué;Carrefour aménagé;116
+13;Blessé hospitalisé;Chantier;122
+14;Blessé léger;Chantier;301
+15;Indemne;Chantier;327
+16;Tué;Chantier;16
+17;Blessé hospitalisé;Souterrain - Pont;402
+18;Blessé léger;Souterrain - Pont;1651
+19;Indemne;Souterrain - Pont;1576
+20;Tué;Souterrain - Pont;107

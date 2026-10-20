@@ -1,0 +1,25 @@
+grav;Var1;Var2;Freq
+1;Blessé hospitalisé;Autoroute;0,06733969986357435
+2;Blessé léger;Autoroute;0,12628283540314722
+3;Indemne;Autoroute;0,13095604688879309
+4;Tué;Autoroute;0,07577601947656726
+5;Blessé hospitalisé;Autre;0,01167803547066848
+6;Blessé léger;Autre;0,00810648311322124
+7;Indemne;Autre;0,00923815975857609
+8;Tué;Autre;0,01156421180766890
+9;Blessé hospitalisé;Route Départementale;0,53102319236016371
+10;Blessé léger;Route Départementale;0,33012667675657742
+11;Indemne;Route Départementale;0,34550717497074585
+12;Tué;Route Départementale;0,59799147900182592
+13;Blessé hospitalisé;Route nationale;0,07541609822646658
+14;Blessé léger;Route nationale;0,07279248647191756
+15;Indemne;Route nationale;0,07324834226355444
+16;Tué;Route nationale;0,09312233718807060
+17;Blessé hospitalisé;Routes de métropole urbaine;0,02766712141882674
+18;Blessé léger;Routes de métropole urbaine;0,03020753426077582
+19;Indemne;Routes de métropole urbaine;0,02872041222721767
+20;Tué;Routes de métropole urbaine;0,02586731588557517
+21;Blessé hospitalisé;Voie Communales;0,28687585266030013
+22;Blessé léger;Voie Communales;0,43248398399436072
+23;Indemne;Voie Communales;0,41232986389111287
+24;Tué;Voie Communales;0,19567863664029214

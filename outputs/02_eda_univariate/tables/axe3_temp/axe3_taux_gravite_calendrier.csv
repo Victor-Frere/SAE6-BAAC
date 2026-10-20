@@ -1,0 +1,45 @@
+proportion;variable;modalite;grav;accidents
+0,1539692563213121;jours_feries;Non;Blessé hospitalisé;17799
+0,4066227800797571;jours_feries;Non;Blessé léger;47006
+0,4118822501535454;jours_feries;Non;Indemne;47614
+0,0275257134453854;jours_feries;Non;Tué;3182
+0,1780636425186188;jours_feries;Oui;Blessé hospitalisé;526
+0,4153689911983751;jours_feries;Oui;Blessé léger;1227
+0,3713608666215301;jours_feries;Oui;Indemne;1097
+0,0352064996614760;jours_feries;Oui;Tué;104
+0,1486640136441160;vacances_scolaires;Non;Blessé hospitalisé;10460
+0,4106736782262649;vacances_scolaires;Non;Blessé léger;28895
+0,4137009664582149;vacances_scolaires;Non;Indemne;29108
+0,0269613416714042;vacances_scolaires;Non;Tué;1897
+0,1631912024068887;vacances_scolaires;Oui;Blessé hospitalisé;7865
+0,4012449424214130;vacances_scolaires;Oui;Blessé léger;19338
+0,4067434381159871;vacances_scolaires;Oui;Indemne;19603
+0,0288204170557112;vacances_scolaires;Oui;Tué;1389
+0,1834510995179291;jour_semaine;dimanche;Blessé hospitalisé;2778
+0,4081753945717493;jour_semaine;dimanche;Blessé léger;6181
+0,3741002443373176;jour_semaine;dimanche;Indemne;5665
+0,0342732615730040;jour_semaine;dimanche;Tué;519
+0,1451003198604245;jour_semaine;jeudi;Blessé hospitalisé;2495
+0,4090724047688282;jour_semaine;jeudi;Blessé léger;7034
+0,4195405641174760;jour_semaine;jeudi;Indemne;7214
+0,0262867112532713;jour_semaine;jeudi;Tué;452
+0,1440804169769173;jour_semaine;lundi;Blessé hospitalisé;2322
+0,4162943658476049;jour_semaine;lundi;Blessé léger;6709
+0,4162943658476049;jour_semaine;lundi;Indemne;6709
+0,0233308513278729;jour_semaine;lundi;Tué;376
+0,1413202933985330;jour_semaine;mardi;Blessé hospitalisé;2312
+0,4108801955990220;jour_semaine;mardi;Blessé léger;6722
+0,4216992665036675;jour_semaine;mardi;Indemne;6899
+0,0261002444987775;jour_semaine;mardi;Tué;427
+0,1452684175248309;jour_semaine;mercredi;Blessé hospitalisé;2384
+0,4103345317165316;jour_semaine;mercredi;Blessé léger;6734
+0,4199622204618853;jour_semaine;mercredi;Indemne;6892
+0,0244348302967522;jour_semaine;mercredi;Tué;401
+0,1723520858964322;jour_semaine;samedi;Blessé hospitalisé;3082
+0,3962643999552622;jour_semaine;samedi;Blessé léger;7086
+0,3995638071804049;jour_semaine;samedi;Indemne;7145
+0,0318197069679007;jour_semaine;samedi;Tué;569
+0,1517893870835047;jour_semaine;vendredi;Blessé hospitalisé;2952
+0,3993726861373920;jour_semaine;vendredi;Blessé léger;7767
+0,4209687371452077;jour_semaine;vendredi;Indemne;8187
+0,0278691896338955;jour_semaine;vendredi;Tué;542

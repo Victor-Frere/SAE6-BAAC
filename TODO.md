@@ -137,99 +137,87 @@ Script : `R/01_data_cleaning.R`
 Les scripts d'analyse suivants devront importer la base finale avec
 `readr::read_csv2(here::here("data", "processed", "dataset_analytique_clean.csv"))`.
 
-## Phase 2 — Statistique descriptive univariée et bivariée
+## Phase 2 — Statistique descriptive univariée et bivariée (selon les 3 Axes)
 
 Script : `R/02_eda_univariate.R`
 
-### 2.1 Analyse univariée
+### 2.1 Axe 1 : Infrastructures & Typologie des Voies
 
-- [ ] Variables quantitatives : calculer moyenne, médiane, écart-type, IQR,
-      asymétrie et kurtosis
-- [ ] Variables qualitatives : calculer effectifs et fréquences relatives
-- [ ] Produire histogrammes, densités, boxplots et barplots
+- [x] Calculer les statistiques descriptives de `vma` (moyenne, médiane, IQR, skewness) selon les types de routes
+- [x] Croiser la gravité (`grav`) avec la catégorie de route (`catr`) et le type d'infrastructure (`infra`, `plan`, `prof`)
+- [x] Produire les histogrammes, boxplots croisés et barplots de l'Axe 1 dans `outputs/02_eda_univariate/figures/axe1_infra/`
 
-### 2.2 Analyse bivariée
+### 2.2 Axe 2 : Vulnérabilité des Usagers & Équipements de Sécurité
 
-- [ ] Quantitatif vs quantitatif : matrice de corrélation Pearson/Spearman et
-      nuages de points avec courbes LOESS
-- [ ] Qualitatif vs quantitatif : boxplots croisés et moyennes conditionnelles
-- [ ] Qualitatif vs qualitatif : tables de contingence et profils lignes/colonnes
+- [x] Analyser la distribution de l'âge (`age`) et des tranches d'âge (`tranche_age`) par niveau de sévérité (`grav`)
+- [x] Mesurer l'effet bivarié de la présence d'équipements de sécurité (`presence_secu`) sur la sévérité des blessures
+- [x] Générer les tables de contingence, profils lignes/colonnes et graphiques associés dans `outputs/02_eda_univariate/figures/axe2_usagers/`
 
-## Phase 3 — Analyse spatiale
+### 2.3 Axe 3 : Temporalité, Calendrier & Facteurs Exogènes
+
+- [x] Évaluer la survenance et la gravité selon le calendrier (`jours_feries`, `vacances_scolaires`, `jour_semaine`)
+- [x] Analyser la distribution horaire (`heure_exacte`) des accidents et la sévérité par tranche horaire
+- [x] Exporter les représentations graphiques temporelles dans `outputs/02_eda_univariate/figures/axe3_temp/`
+
+## Phase 3 — Analyse spatiale (Focus Axe 1)
 
 Script : `R/03_spatial_analysis.R`
 
-### 3.1 Visualisation cartographique
+### 3.1 Spatialisation & Conversion cartographique
 
-- [ ] Cartographier la variable réponse `Y` avec `sf`, `tmap` ou `ggplot2`
-- [ ] Cartographier les principales variables explicatives `X_k`
+- [ ] Filtrer les coordonnées valides et convertir le dataframe en objet `sf` (WGS84 EPSG:4326 -> Lambert-93 EPSG:2154)
+- [ ] Exporter la couche géographique sous `data/processed/accidents_spatial.gpkg`
+- [ ] Cartographier la gravité (`grav`) et la densité des accidents selon la catégorie de route (`catr`)
 
 ### 3.2 Tests de dépendance spatiale
 
-- [ ] Construire la matrice de pondération spatiale `W`, normée en ligne
-- [ ] Calculer l'indice de Moran global sur la variable réponse `Y`
+- [ ] Construire la matrice de pondération spatiale `W` (normée en ligne)
+- [ ] Calculer l'indice de Moran global sur la sévérité des accidents
 - [ ] Exécuter le test LISA (Local Indicators of Spatial Association)
-- [ ] Cartographier les clusters High-High, Low-Low, High-Low et Low-High
+- [ ] Cartographier les clusters de sévérité spatiale (Hotspots High-High, Low-Low)
 
-## Phase 4 — Inférence statistique et tests d'hypothèses
+## Phase 4 — Inférence statistique et tests d'hypothèses (structurée par Axe)
 
 Script : `R/04_stat_testing.R`
 
 Pour chaque test, formuler explicitement `H_0` et `H_1`, préciser le nom du
 test, sa statistique, sa p-valeur et la décision au seuil `alpha = 5 %`.
 
-### 4.1 Tests entre variables explicatives (`X_i` vs `X_j`)
+### 4.1 Tests Axe 1 (Infrastructures)
 
-- [ ] Quantitatif vs quantitatif : test de corrélation de Pearson ou Spearman
-- [ ] Qualitatif vs qualitatif : test du chi carré d'indépendance ou test exact
-      de Fisher
-- [ ] Qualitatif vs quantitatif : test t de Student, ANOVA ou
-      Kruskal-Wallis selon les conditions d'application
+- [ ] Test du Chi-2 / Fisher : Indépendance entre catégorie de route (`catr`) / infrastructure (`infra`) et la gravité (`grav`)
+- [ ] ANOVA / Kruskal-Wallis : Comparaison de la VMA (`vma`) selon les niveaux de gravité
 
-### 4.2 Tests entre variables explicatives et réponse (`X_k` vs `Y`)
+### 4.2 Tests Axe 2 (Usagers & Sécurité)
 
-- [ ] Réaliser les tests de liaison bivariée pour présélectionner les variables
-      explicatives potentiellement significatives
+- [ ] Test du Chi-2 et V de Cramér : Test de liaison entre `presence_secu` et la gravité (`grav`)
+- [ ] Test t de Student / Kruskal-Wallis : Effet de l'âge (`age` / `tranche_age`) sur la sévérité
 
-## Phase 5 — Modélisation par régression linéaire
+### 4.3 Tests Axe 3 (Temporalité)
+
+- [ ] Test du Chi-2 : Impact des `jours_feries` et `vacances_scolaires` sur la proportion d'accidents graves (`grave_bin`)
+- [ ] Test d'indépendance sur les tranches horaires et jours de la semaine vs gravité
+
+## Phase 5 — Modélisation de la Sévérité & Économétrie
 
 Script : `R/05_modeling_lm.R`
 
-### 5.1 Formulation mathématique
+### 5.1 Formulation mathématique & Partitionnement
 
-- [ ] Écrire la formulation théorique :
-      `Y_i = beta_0 + sum(beta_j * X_ij) + epsilon_i`, avec
-      `epsilon_i iid ~ N(0, sigma^2)`
-
-### 5.2 Partitionnement des données
-
+- [ ] Écrire la formulation théorique explicative de la sévérité (`grave_bin` ou `grav`) en intégrant les covariables des 3 axes
 - [ ] Séparer les données en jeu d'entraînement (80 %) et jeu de test (20 %)
 
-### 5.3 Sélection de variables
+### 5.2 Sélection de variables & Inférence
 
-- [ ] Appliquer une procédure stepwise (AIC/BIC) ou Lasso (`glmnet`)
-- [ ] Filtrer les variables selon les p-valeurs (`p < 0.05`)
+- [ ] Appliquer une procédure stepwise (AIC/BIC) ou Lasso (`glmnet`) sur les prédicteurs des 3 axes
+- [ ] Estimer le modèle (Régression Logistique / Ordonnée) et calculer les Odds Ratios associés
+- [ ] Quantifier l'effet propre du port d'équipement (Axe 2), de la vitesse/route (Axe 1) et du calendrier (Axe 3)
 
-### 5.4 Diagnostic des conditions de validité
+### 5.3 Diagnostics et réajustements
 
-- [ ] Normalité des résidus : test de Shapiro-Wilk et Q-Q plot
-- [ ] Homoscédasticité : test de Breusch-Pagan et graphique résidus vs fitted
-- [ ] Absence d'autocorrélation des résidus : test de Durbin-Watson
-- [ ] Absence de multicolinéarité : calculer le VIF et vérifier `VIF < 5`
-- [ ] Autocorrélation spatiale des résidus : test de Moran sur les résidus
-
-### 5.5 Corrections et réajustements
-
-- [ ] Si nécessaire, appliquer une transformation de Box-Cox ou logarithmique
-- [ ] Si nécessaire, utiliser une régression pondérée (WLS) ou des
-      erreurs-types robustes HC3 (`sandwich`)
-- [ ] Si nécessaire, ajuster un modèle Spatial Lag ou Spatial Error avec
-      `spatialreg`
-
-### 5.6 Interprétation du modèle final
-
-- [ ] Interpréter les coefficients `beta_j`, leurs intervalles de confiance et
-      leur portée métier
+- [ ] Vérifier l'absence de multicolinéarité (`VIF < 5`)
+- [ ] Analyser l'autocorrélation spatiale des résidus du modèle (Test de Moran)
+- [ ] Si nécessaire, appliquer un modèle avec erreurs-types robustes ou un modèle Spatial Lag / Spatial Error (`spatialreg`)
 
 ## Phase 6 — Évaluation et comparaison des modèles
 
@@ -237,14 +225,12 @@ Script : `R/06_model_eval.R`
 
 ### 6.1 Évaluation sur le jeu de test
 
-- [ ] Calculer RMSE, MAE et R² ajusté
+- [ ] Calculer les métriques de performance sur le jeu de test (Accuracy, AUC, Matrice de confusion, RMSE/MAE si linéaire)
 
-### 6.2 Comparaison avec les modèles de la partie 3
+### 6.2 Comparaison avec les modèles de Machine Learning
 
-- [ ] Comparer OLS et modèles de machine learning (Random Forest, XGBoost) sur
-      le même jeu de test
-- [ ] Expliquer les différences de performance : non-linéarités, interactions,
-      dépendance spatiale et compromis interprétabilité/prédiction
+- [ ] Comparer le modèle économétrique (OLS / Logistique) aux modèles ML (Random Forest, XGBoost)
+- [ ] Mesurer l'importance relative des variables explicatives pour identifier quel axe (Infra, Usagers ou Temporalité) explique le mieux la sévérité
 
 ## Phase 7 — Rapport et support de soutenance
 
@@ -256,16 +242,11 @@ LaTeX et expliciter les hypothèses.
 
 ### 7.1 Rapport (`report/report.qmd`)
 
-- [ ] Introduction et contexte
-- [ ] Analyse exploratoire et prétraitement (graphiques et tableaux propres)
-- [ ] Analyse spatiale (cartes et tests de Moran/LISA)
-- [ ] Inférence statistique (tableaux récapitulatifs des tests)
-- [ ] Modélisation par régression linéaire (formulation, diagnostics,
-      corrections et interprétation)
-- [ ] Évaluation comparative et discussion (tableau OLS vs ML)
-- [ ] Conclusion et perspectives
+- [ ] Introduction et problématique générale déclinée selon les 3 axes
+- [ ] Restitution synthétique de l'analyse exploratoire et spatiale (Figures 300 dpi, fond blanc)
+- [ ] Inférence statistique et résultats des modèles économétriques (Odds Ratios, VIF, diagnostics)
+- [ ] Discussion comparative (Économétrie vs Machine Learning) et recommandations de sécurité routière
 
 ### 7.2 Support de soutenance (`report/slides.qmd`)
 
-- [ ] Élaborer des diapositives synthétiques et visuelles pour la présentation
-      orale
+- [ ] Élaborer des diapositives synthétiques et visuelles pour la présentation orale (1 section dédiée à chaque axe d'analyse)

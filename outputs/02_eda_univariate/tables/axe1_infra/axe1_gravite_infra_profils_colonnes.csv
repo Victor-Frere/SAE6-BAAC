@@ -1,0 +1,21 @@
+grav;Var1;Var2;Freq
+1;Blessé hospitalisé;Aucun;0,1574457495520605
+2;Blessé léger;Aucun;0,4049472426836552
+3;Indemne;Aucun;0,4088492932510452
+4;Tué;Aucun;0,0287577145132391
+5;Blessé hospitalisé;Autres;0,1494511680270194
+6;Blessé léger;Autres;0,4189417393751759
+7;Indemne;Autres;0,4093723613847453
+8;Tué;Autres;0,0222347312130594
+9;Blessé hospitalisé;Carrefour aménagé;0,1421304146755049
+10;Blessé léger;Carrefour aménagé;0,4043471558501618
+11;Indemne;Carrefour aménagé;0,4356405117928164
+12;Tué;Carrefour aménagé;0,0178819176815169
+13;Blessé hospitalisé;Chantier;0,1592689295039164
+14;Blessé léger;Chantier;0,3929503916449086
+15;Indemne;Chantier;0,4268929503916449
+16;Tué;Chantier;0,0208877284595300
+17;Blessé hospitalisé;Souterrain - Pont;0,1076017130620985
+18;Blessé léger;Souterrain - Pont;0,4419164882226981
+19;Indemne;Souterrain - Pont;0,4218415417558887
+20;Tué;Souterrain - Pont;0,0286402569593148

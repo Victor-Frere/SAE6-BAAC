@@ -23,12 +23,51 @@ Le script `R/01_data_cleaning.R` execute les etapes suivantes :
 8. Construction de la base analytique : age, tranches d'age, date, heure,
    jour de la semaine, jours feries, vacances scolaires et `presence_secu`.
 
+## Problématiques de recherche et axes d'analyse
+
+### Problématique 1 : Inégalités Territoriales et Typologie des Infrastructures
+
+**Axe Spatial & Infrastructure**
+
+- **Question :** « Dans quelle mesure la gravité d'un accident de la route
+  est-elle conditionnée par la typologie de l'infrastructure (`catr`, `vma`,
+  `infra`) et sa localisation spatiale (milieu urbain vs rattaché aux grands
+  axes routiers) ? »
+- **Intérêt académique :** régression logistique ordonnée (prédiction du niveau
+  de gravité) et analyse de dépendance spatiale (autocorrélation spatiale I de
+  Moran sur les clusters d'accidents graves).
+
+### Problématique 2 : Profils de Vulnérabilité des Usagers et Équipements de Sécurité
+
+**Axe Usagers & PR**
+
+- **Question :** « L'efficacité protectrice des équipements de sécurité
+  (`presence_secu`) varie-t-elle de manière significative selon la tranche
+  d'âge de l'usager et le mode de déplacement (piéton, deux-roues,
+  automobiliste) ? »
+- **Intérêt académique :** modèles d'interaction (effets modérateurs) et tests
+  de Chi-2 / V de Cramér avancés (réduction du risque relatif de blessure grave
+  ou décès).
+
+### Problématique 3 : Temporalité, Calendrier et Facteurs Exogènes
+
+**Axe Temporel & Calendrier**
+
+- **Question :** « Quel est l'effet propre des périodes à haut risque (vacances
+  scolaires, jours fériés, conditions nocturnes) sur la survenance et la
+  sévérité des accidents à caractéristiques d'usagers constantes ? »
+- **Intérêt académique :** modèles de comptage (régression de Poisson /
+  binomiale négative par commune/jour) et découpage temporel issu des
+  référentiels calendaires.
+
 ## Structure
 
 - `data/raw/` : fichiers sources, conserves hors du depot.
 - `data/processed/` : donnees nettoyees et intermediaires, conservees hors du depot.
 - `R/` : scripts d'analyse, executes dans l'ordre numerique.
-- `outputs/figures/` et `outputs/tables/` : resultats generes.
+- `outputs/<nom_script>/figures/` : figures generees par chaque script.
+- `outputs/<nom_script>/tables/` : tableaux et resultats tabulaires de chaque
+  script.
 - `report/` : rapports et supports de restitution.
 - `main.R` : script maitre d'orchestration.
 
@@ -42,13 +81,14 @@ Le script `R/01_data_cleaning.R` genere notamment :
   suppression des lignes restant incompletes.
 - `data/processed/dataset_analytique_clean.csv` : base finale enrichie avec
   les variables analytiques de la section 1.6.
-- `outputs/figures/hist_doublons.png` : audit des doublons.
-- `outputs/figures/outliers_check.png` : controle graphique des valeurs
+- `outputs/01_data_cleaning/figures/hist_doublons.png` : audit des doublons.
+- `outputs/01_data_cleaning/figures/outliers_check.png` : controle graphique des valeurs
   aberrantes.
-- `outputs/figures/miss_var.png` et `miss_var_post_rules.png` : audit des
+- `outputs/01_data_cleaning/figures/miss_var.png` et
+  `outputs/01_data_cleaning/figures/miss_var_post_rules.png` : audit des
   valeurs manquantes avant et apres les regles metier.
-- `outputs/figures/tableau_bilan_imputation.png` : bilan graphique de
-  l'imputation.
+- `outputs/01_data_cleaning/figures/tableau_bilan_imputation.png` : bilan
+  graphique de l'imputation.
 
 ## Prerequis et lancement
 

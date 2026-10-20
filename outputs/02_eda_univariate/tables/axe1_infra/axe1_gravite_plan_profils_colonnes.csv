@@ -1,0 +1,17 @@
+grav;Var1;Var2;Freq
+1;Blessé hospitalisé;En « S »;0,2690417690417690
+2;Blessé léger;En « S »;0,3538083538083538
+3;Indemne;En « S »;0,3310810810810811
+4;Tué;En « S »;0,0460687960687961
+5;Blessé hospitalisé;En courbe à droite;0,2190910895018853
+6;Blessé léger;En courbe à droite;0,3882714824369914
+7;Indemne;En courbe à droite;0,3470926771184759
+8;Tué;En courbe à droite;0,0455447509426474
+9;Blessé hospitalisé;En courbe à gauche;0,2322978969708663
+10;Blessé léger;En courbe à gauche;0,3831757669303492
+11;Indemne;En courbe à gauche;0,3369670075245996
+12;Tué;En courbe à gauche;0,0475593285741848
+13;Blessé hospitalisé;Partie rectiligne;0,1375475472363007
+14;Blessé léger;Partie rectiligne;0,4122176963817460
+15;Indemne;Partie rectiligne;0,4268213053076708
+16;Tué;Partie rectiligne;0,0234134510742825

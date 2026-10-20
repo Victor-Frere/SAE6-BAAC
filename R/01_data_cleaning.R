@@ -7,6 +7,12 @@ library(readxl)
 library(here)
 library(mice)
 
+# Centraliser les figures et les tables d'audit dans les dossiers du script.
+dir_fig_01 <- here::here("outputs", "01_data_cleaning", "figures")
+dir_tab_01 <- here::here("outputs", "01_data_cleaning", "tables")
+fs::dir_create(c(dir_fig_01, dir_tab_01))
+figures_dir <- dir_fig_01
+
 # --- 1.1 Importation et Normalisation ---
 
 # Importer le dictionnaire pour conserver les définitions initiales des
@@ -179,12 +185,6 @@ doublons_plot_data <- doublons_audit |>
     )
   )
 
-figures_dir <- here::here("outputs", "figures")
-if (!dir.exists(figures_dir) &&
-    !dir.create(figures_dir, recursive = TRUE, showWarnings = FALSE)) {
-  stop("Impossible de créer le dossier de sortie : ", figures_dir, call. = FALSE)
-}
-
 hist_doublons <- ggplot2::ggplot(
   doublons_plot_data,
   ggplot2::aes(x = table, y = nombre, fill = type_ligne)
@@ -199,12 +199,16 @@ hist_doublons <- ggplot2::ggplot(
   ggplot2::theme_minimal()
 
 ggplot2::ggsave(
-  filename = here::here("outputs", "figures", "hist_doublons.png"),
+  filename = file.path(dir_fig_01, "hist_doublons.png"),
   plot = hist_doublons,
   width = 8,
   height = 5,
   units = "in",
   dpi = 300
+)
+readr::write_csv2(
+  doublons_audit,
+  file.path(dir_tab_01, "audit_doublons.csv")
 )
 
 # Pour les tables autres que lieux, conserver la première occurrence de chaque
@@ -770,17 +774,11 @@ outliers_check <- ggplot2::ggplot(
   ggplot2::theme_minimal() +
   ggplot2::theme(axis.text.x = ggplot2::element_blank())
 
-figures_dir <- here::here("outputs", "figures")
 processed_dir <- here::here("data", "processed")
-for (output_dir in c(figures_dir, processed_dir)) {
-  if (!dir.exists(output_dir) &&
-      !dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)) {
-    stop("Impossible de créer le dossier de sortie : ", output_dir, call. = FALSE)
-  }
-}
+fs::dir_create(c(figures_dir, processed_dir))
 
 ggplot2::ggsave(
-  filename = here::here("outputs", "figures", "outliers_check.png"),
+  filename = file.path(dir_fig_01, "outliers_check.png"),
   plot = outliers_check,
   width = 8,
   height = 5,
@@ -855,7 +853,7 @@ miss_var_plot <- naniar::gg_miss_var(baac_typed) +
   ggplot2::theme_minimal()
 
 ggplot2::ggsave(
-  filename = here::here("outputs", "figures", "miss_var.png"),
+  filename = file.path(dir_fig_01, "miss_var.png"),
   plot = miss_var_plot,
   width = 8,
   height = 6,
@@ -967,11 +965,7 @@ miss_var_post_rules_plot <- naniar::gg_miss_var(baac_typed) +
   ggplot2::theme_minimal()
 
 ggplot2::ggsave(
-  filename = here::here(
-    "outputs",
-    "figures",
-    "miss_var_post_rules.png"
-  ),
+  filename = file.path(dir_fig_01, "miss_var_post_rules.png"),
   plot = miss_var_post_rules_plot,
   width = 8,
   height = 6,
@@ -1604,11 +1598,7 @@ if (exists("df_bilan", inherits = FALSE) &&
       table_width <- max(10, min(20, 0.16 * ncol(df_bilan) * 20))
       table_height <- max(3.5, min(20, 0.35 * nrow(df_bilan) + 2))
       ggplot2::ggsave(
-        filename = here::here(
-          "outputs",
-          "figures",
-          "tableau_bilan_imputation.png"
-        ),
+        filename = file.path(dir_fig_01, "tableau_bilan_imputation.png"),
         plot = bilan_plot,
         width = table_width,
         height = table_height,
@@ -1617,7 +1607,7 @@ if (exists("df_bilan", inherits = FALSE) &&
         dpi = 300
       )
       cli::cli_alert_success(
-        "Tableau bilan sauvegardé dans outputs/figures/tableau_bilan_imputation.png."
+        "Tableau bilan sauvegardé dans outputs/figures/01_data_cleaning/tableau_bilan_imputation.png."
       )
     },
     error = function(error) {

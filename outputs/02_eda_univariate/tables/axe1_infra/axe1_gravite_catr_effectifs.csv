@@ -1,0 +1,25 @@
+grav;Var1;Var2;Freq
+1;Blessé hospitalisé;Autoroute;1234
+2;Blessé léger;Autoroute;6091
+3;Indemne;Autoroute;6379
+4;Tué;Autoroute;249
+5;Blessé hospitalisé;Autre;214
+6;Blessé léger;Autre;391
+7;Indemne;Autre;450
+8;Tué;Autre;38
+9;Blessé hospitalisé;Route Départementale;9731
+10;Blessé léger;Route Départementale;15923
+11;Indemne;Route Départementale;16830
+12;Tué;Route Départementale;1965
+13;Blessé hospitalisé;Route nationale;1382
+14;Blessé léger;Route nationale;3511
+15;Indemne;Route nationale;3568
+16;Tué;Route nationale;306
+17;Blessé hospitalisé;Routes de métropole urbaine;507
+18;Blessé léger;Routes de métropole urbaine;1457
+19;Indemne;Routes de métropole urbaine;1399
+20;Tué;Routes de métropole urbaine;85
+21;Blessé hospitalisé;Voie Communales;5257
+22;Blessé léger;Voie Communales;20860
+23;Indemne;Voie Communales;20085
+24;Tué;Voie Communales;643
